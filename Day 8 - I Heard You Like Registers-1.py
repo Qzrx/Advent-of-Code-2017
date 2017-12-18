@@ -1013,21 +1013,18 @@ hkt dec -874 if hkt == 2490'''
 
 class Register(object):
     def __init__(self, name):
-        self.value = int()
-        self.max_value = int()
+        self.value = int(0)
+        self.max_value = int(0)
         self.name = name
         return(None)
 
     def operate(self, instruction, amount):
         if instruction == 'inc':
             new_value = self.value + amount
-            self.max_value = max(self.value, new_value)
-            self.value = new_value
         if instruction == 'dec':
             new_value = self.value - amount
-            self.max_value = max(self.value, new_value)
-            self.value = new_value
-        print(self.name, str(self.value), str(self.max_value))
+        self.max_value = max(self.max_value, new_value)
+        self.value = new_value
         return(self)
 
     def __str__(self):
@@ -1089,8 +1086,10 @@ def machine(stack):
 
     return registers
 
+
+results = machine(fancy_stack)
 register_values = []
-for register in machine(fancy_stack).values():
+for register in results.values():
     register_values.append(register.max_value)
 
 print(register_values)
